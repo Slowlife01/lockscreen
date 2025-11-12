@@ -33,7 +33,7 @@ SessionManagementScreen {
     signal passwordResult(string password)
 
     function startLogin() {
-        const password = passwordBox.text
+        const password = passwordBox.text;
         passwordResult(password);
     }
 
@@ -60,7 +60,7 @@ SessionManagementScreen {
             color: sessionManager.textColor
             selectionColor: sessionManager.textColor
             selectedTextColor: "#000000"
-            clip: false
+            clip: true
 
             horizontalAlignment: TextInput.AlignHCenter
             verticalAlignment: TextInput.AlignVCenter
@@ -139,7 +139,7 @@ SessionManagementScreen {
                 Connections {
                     target: root
                     function onClearPassword() {
-                        passwordBox.forceActiveFocus()
+                        passwordBox.forceActiveFocus();
                         passwordBox.text = "";
                         passwordBox.text = Qt.binding(() => PasswordSync.password);
                     }
@@ -156,7 +156,6 @@ SessionManagementScreen {
                 }
             }
         }
-
 
         Binding {
             target: PasswordSync
