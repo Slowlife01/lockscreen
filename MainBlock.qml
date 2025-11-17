@@ -7,13 +7,6 @@
 import QtQuick 2.2
 
 import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.12 as QQC2
-
-import org.kde.plasma.components 3.0 as PlasmaComponents3
-import org.kde.plasma.extras 2.0 as PlasmaExtras
-import org.kde.kirigami 2.20 as Kirigami
-import org.kde.kscreenlocker 1.0 as ScreenLocker
-
 import org.kde.breeze.components
 
 SessionManagementScreen {
@@ -80,23 +73,11 @@ SessionManagementScreen {
 
             cursorDelegate: Rectangle {
                 id: passwordInputCursor
-                property string cursorColorSetting: "random"
-
-                function getCursorColor() {
-                    var setting = cursorColorSetting;
-                    if (setting.length === 7 && setting[0] === "#") {
-                        return setting;
-                    } else if (setting === "constantRandom" || setting === "random") {
-                        return generateRandomColor();
-                    } else {
-                        return sessionManager.textColor;
-                    }
-                }
                 width: 18 / 96 * sessionManager.passwordFontSize
                 visible: true
                 onHeightChanged: height = passwordBox.height / 2
                 anchors.verticalCenter: parent.verticalCenter
-                color: getCursorColor()
+                color: generateRandomColor()
                 property color currentColor: color
 
                 SequentialAnimation on color {
@@ -149,9 +130,7 @@ SessionManagementScreen {
                     target: passwordBox
                     function onTextEdited() {
                         // Only update color on every edit when using truly random cursor color.
-                        if (passwordInputCursor.cursorColorSetting === "random") {
-                            passwordInputCursor.currentColor = passwordInputCursor.generateRandomColor();
-                        }
+                        passwordInputCursor.currentColor = passwordInputCursor.generateRandomColor();
                     }
                 }
             }
